@@ -36,7 +36,7 @@ variable "instance_type" {
 }
 
 variable "instance_ami" {
-  default = "ami-023adaba598e661ac"  # Ubuntu20.04
+  default = "ami-023adaba598e661ac"
 }
 
 
