@@ -57,7 +57,7 @@ resource "aws_autoscaling_group" "asg" {
     id      = aws_launch_template.launch_template.id
     version = aws_launch_template.launch_template.latest_version
   }
-  vpc_zone_identifier  = aws_subnet.private_subnets.id
+  vpc_zone_identifier  = aws_subnet.private_subnets[*].id
   termination_policies = ["OldestInstance"]
     wait_for_capacity_timeout = "10m"
   tag {
