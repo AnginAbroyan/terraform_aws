@@ -25,20 +25,23 @@ resource "aws_launch_template" "launch_template" {
   user_data              = filebase64("${path.module}/user-data.sh")
   ebs_optimized          = true
   update_default_version = true
+  iam_instance_profile {
+    name = aws_iam_instance_profile.ec2_instance_profile.name
+  }
 
-  block_device_mappings {
-    ebs {
-      volume_size           = 8
-      delete_on_termination = true
-      volume_type           = "gp2"
-    }
-  }
-  tag_specifications {
-    resource_type = "instance"
-    tags          = {
-      Name = "test"
-    }
-  }
+#  block_device_mappings {
+#    ebs {
+#      volume_size           = 8
+#      delete_on_termination = true
+#      volume_type           = "gp2"
+#    }
+#  }
+#  tag_specifications {
+#    resource_type = "instance"
+#    tags          = {
+#      Name = "test"
+#    }
+#  }
 }
 
 
@@ -51,36 +54,37 @@ resource "aws_autoscaling_group" "asg" {
   force_delete      = true
   launch_template {
     id      = aws_launch_template.launch_template.id
-    version = aws_launch_template.launch_template.latest_version
+    version = "$Latest"
+#    version = aws_launch_template.launch_template.latest_version
   }
   vpc_zone_identifier       = aws_subnet.private_subnets[*].id
   termination_policies      = ["OldestInstance"]
-  wait_for_capacity_timeout = "10m"
+#  wait_for_capacity_timeout = "10m"
   tag {
     key                 = "Name"
     value               = "${var.project_name}-ASG"
     propagate_at_launch = true
   }
 
-  tag {
-    key                 = "Project"
-    value               = "Terraform_Brainscale"
-    propagate_at_launch = true
-  }
+#  tag {
+#    key                 = "Project"
+#    value               = "Terraform_Brainscale"
+#    propagate_at_launch = true
+#  }
 }
 
 ##TODO
-resource "aws_autoscaling_policy" "cpu_scaling_policy" {
-  name                      = "cpu-scaling-policy"
-  policy_type               = "TargetTrackingScaling"
-  adjustment_type           = "ChangeInCapacity"
-  estimated_instance_warmup = 300
-  autoscaling_group_name    = aws_autoscaling_group.asg.name
-
-  target_tracking_configuration {
-    predefined_metric_specification {
-      predefined_metric_type = "ASGAverageCPUUtilization"
-    }
-    target_value = 80.0
-  }
-}
+#resource "aws_autoscaling_policy" "cpu_scaling_policy" {
+#  name                      = "cpu-scaling-policy"
+#  policy_type               = "TargetTrackingScaling"
+#  adjustment_type           = "ChangeInCapacity"
+#  estimated_instance_warmup = 300
+#  autoscaling_group_name    = aws_autoscaling_group.asg.name
+#
+#  target_tracking_configuration {
+#    predefined_metric_specification {
+#      predefined_metric_type = "ASGAverageCPUUtilization"
+#    }
+#    target_value = 80.0
+#  }
+#}
