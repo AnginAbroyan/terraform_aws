@@ -61,3 +61,9 @@ variable "ecr_repos"{
 variable "dockerfile_location" {
   default = "/home/kali/Desktop/terraform_brainscale"
 }
+
+variable "instance_keypair" {
+  description = "AWS EC2 Key pair"
+  type        = string
+  default     = "brainscale.pem"
+}
