@@ -20,7 +20,7 @@ resource "aws_launch_template" "launch_template" {
   description            = "My Launch template"
   image_id               = var.instance_ami
   instance_type          = var.instance_type
-  vpc_security_group_ids = [aws_security_group.alb_sg.id]
+  vpc_security_group_ids = [aws_security_group.asg_sg.id]
   key_name               = var.instance_keypair
   user_data              = filebase64("${path.module}/user-data.sh")
   ebs_optimized          = true
