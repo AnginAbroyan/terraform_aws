@@ -7,7 +7,6 @@ resource "aws_ecr_repository" "repository" {
 
 resource "null_resource" "docker_image" {
   for_each = toset(var.ecr_repos)
-  name = "${aws_ecr_repository.repository[each.key].repository_url}:latest"
 
   provisioner "local-exec" {
     command = <<EOF
@@ -17,4 +16,12 @@ ${data.aws_caller_identity.current.account_id}.dkr.ecr.eu-central-1.amazonaws.co
 	    docker push "${aws_ecr_repository.repository[each.key].repository_url}:latest"
 	    EOF
   }
+  triggers = {
+    "run_at" = timestamp()
+  }
+
+
+  depends_on = [
+    aws_ecr_repository.repository[each.key],
+  ]
 }
