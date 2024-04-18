@@ -49,7 +49,7 @@ resource "aws_autoscaling_group" "asg" {
   min_size          = var.asg_min_size
   desired_capacity  = var.asg_desired_capacity
   health_check_type = "EC2"
-  target_group_arns = aws_lb_target_group.target_group
+  target_group_arns = [aws_lb_target_group.target_group.arn]
   force_delete      = true
   launch_template {
     id      = aws_launch_template.launch_template.id
