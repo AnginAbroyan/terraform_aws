@@ -13,7 +13,6 @@ resource "aws_launch_configuration" "launch_configuration" {
     volume_size = 8
     delete_on_termination = true
   }
-  subnet_id = aws_subnet.private_subnets[var.private_subnet_index].id
 }
 
 
