@@ -37,7 +37,7 @@ resource "aws_launch_template" "launch_template" {
 
   tag_specifications {
     resource_type = "instance"
-    tags = {
+    tags          = {
       Name = "test"
     }
   }
@@ -45,11 +45,12 @@ resource "aws_launch_template" "launch_template" {
 
 
 resource "aws_autoscaling_group" "asg" {
-  max_size                  = var.asg_max_size
-  min_size                  = var.asg_min_size
-  desired_capacity          = var.asg_desired_capacity
-  health_check_type         = "EC2"
-  force_delete              = true
+  max_size          = var.asg_max_size
+  min_size          = var.asg_min_size
+  desired_capacity  = var.asg_desired_capacity
+  health_check_type = "EC2"
+  target_group_arns = aws_lb_target_group.target_group
+  force_delete      = true
   launch_template {
     id      = aws_launch_template.launch_template.id
     version = aws_launch_template.launch_template.latest_version
@@ -76,7 +77,7 @@ resource "aws_autoscaling_policy" "cpu_scaling_policy" {
   policy_type               = "TargetTrackingScaling"
   adjustment_type           = "ChangeInCapacity"
   estimated_instance_warmup = 300
-  autoscaling_group_name = aws_autoscaling_group.asg.name
+  autoscaling_group_name    = aws_autoscaling_group.asg.name
 
   target_tracking_configuration {
     predefined_metric_specification {
