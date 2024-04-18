@@ -22,7 +22,7 @@ resource "aws_launch_template" "launch_template" {
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.asg_sg.id]
   key_name               = var.instance_keypair
-  user_data              = filebase64("${path.module}/user-data.sh")
+#  user_data              = filebase64("${path.module}/user-data.sh")
   ebs_optimized          = true
   update_default_version = true
   iam_instance_profile {
@@ -52,10 +52,11 @@ resource "aws_autoscaling_group" "asg" {
   health_check_type = "EC2"
   target_group_arns = [aws_lb_target_group.target_group.arn]
   force_delete      = true
+  health_check_grace_period = 300
   launch_template {
     id      = aws_launch_template.launch_template.id
-    version = "$Latest"
-#    version = aws_launch_template.launch_template.latest_version
+#    version = "$Latest"
+    version = aws_launch_template.launch_template.latest_version
   }
   vpc_zone_identifier       = aws_subnet.private_subnets[*].id
   termination_policies      = ["OldestInstance"]
@@ -88,3 +89,14 @@ resource "aws_autoscaling_group" "asg" {
 #    target_value = 80.0
 #  }
 #}
+
+
+# scale up policy
+resource "aws_autoscaling_policy" "scale_up" {
+  name                   = "${var.project_name}-asg-scale-up"
+  autoscaling_group_name = aws_autoscaling_group.asg.name
+  adjustment_type        = "ChangeInCapacity"
+  scaling_adjustment     = "1" #increasing instance by 1
+  cooldown               = "300"
+  policy_type            = "SimpleScaling"
+}
