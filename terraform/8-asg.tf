@@ -1,9 +1,9 @@
 resource "aws_launch_configuration" "launch_configuration" {
-  name = "launch_config"
-  image_id             = var.instance_ami  # Ubuntu 22.04 LTS
-  instance_type        = var.instance_type
-  security_groups      = [aws_security_group.alb_sg.id]
-  associate_public_ip_address = true
+  name                        = "launch_config"
+  image_id                    = var.instance_ami  # Ubuntu 22.04 LTS
+  instance_type               = var.instance_type
+  security_groups             = [aws_security_group.alb_sg.id]
+  associate_public_ip_address = false
   lifecycle {
     create_before_destroy = true
   }
@@ -30,5 +30,22 @@ resource "aws_autoscaling_group" "asg" {
     key                 = "Project"
     value               = "Terraform_Brainscale"
     propagate_at_launch = true
+  }
+}
+
+##TODO
+resource "aws_autoscaling_policy" "cpu_scaling_policy" {
+  name                   = "cpu-scaling-policy"
+  policy_type            = "TargetTrackingScaling"
+  scaling_adjustment     = 1
+  adjustment_type        = "ChangeInCapacity"
+  cooldown               = 300
+  autoscaling_group_name = aws_autoscaling_group.asg.name
+
+  target_tracking_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "ASGAverageCPUUtilization"
+    }
+    target_value = 80.0
   }
 }

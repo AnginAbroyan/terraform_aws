@@ -1,5 +1,5 @@
 #ECR
-resource "aws_ecr_repository" "ecr_repository" {
+resource "aws_ecr_repository" "repository" {
   for_each = toset(var.ecr_repos)
   name = each.key
 }
@@ -7,7 +7,7 @@ resource "aws_ecr_repository" "ecr_repository" {
 
 resource "docker_registry_image" "docker_image" {
   for_each = toset(var.ecr_repos)
-  name = "${aws_ecr_repository.ecr_repository[each.key].repository_url}:latest"
+  name = "${aws_ecr_repository.repository[each.key].repository_url}:latest"
 
   build {
     context = var.path
