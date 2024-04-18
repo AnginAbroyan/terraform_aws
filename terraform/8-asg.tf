@@ -27,14 +27,12 @@ resource "aws_launch_template" "launch_template" {
   update_default_version = true
 
   block_device_mappings {
-    device_name = "/dev/sda1"
     ebs {
       volume_size           = 8
       delete_on_termination = true
       volume_type           = "gp2"
     }
   }
-
   tag_specifications {
     resource_type = "instance"
     tags          = {
