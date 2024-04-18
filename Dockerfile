@@ -1,8 +1,8 @@
 FROM node:14-alpine
 
-WORKDIR /brainscale-simple-app
+WORKDIR /terraform_brainscale
 
-COPY . /brainscale-simple-app
+COPY . /terraform_brainscale
 
 RUN npm install
 
