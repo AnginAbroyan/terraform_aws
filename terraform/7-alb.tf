@@ -10,6 +10,7 @@ resource "aws_lb_target_group" "target_group" {
   name     = "target-group"
   port     = 3000
   protocol = "HTTP"
+  target_type = "instance"
 
   health_check {
     path                = "/login"
