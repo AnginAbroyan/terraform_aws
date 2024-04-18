@@ -37,7 +37,6 @@ resource "aws_autoscaling_group" "asg" {
 resource "aws_autoscaling_policy" "cpu_scaling_policy" {
   name                      = "cpu-scaling-policy"
   policy_type               = "TargetTrackingScaling"
-  scaling_adjustment        = 1
   adjustment_type           = "ChangeInCapacity"
   estimated_instance_warmup = 300
   autoscaling_group_name = aws_autoscaling_group.asg.name
