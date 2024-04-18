@@ -22,6 +22,6 @@ ${data.aws_caller_identity.current.account_id}.dkr.ecr.eu-central-1.amazonaws.co
 
 
   depends_on = [
-    aws_ecr_repository.repository[each.key],
+    aws_ecr_repository.repository,
   ]
 }
