@@ -7,7 +7,7 @@ resource "aws_lb" "alb" {
 
 ##TODO
 resource "aws_lb_target_group" "target_group" {
-  name     = "${var.project_name}-tg"
+  name     = "${var.project_name}tg"
   port     = 3000
   protocol = "HTTP"
 
