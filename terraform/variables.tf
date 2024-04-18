@@ -58,6 +58,6 @@ variable "ecr_repos"{
   description = "List of repo names"
   default = ["ecr-brainscale"]
 }
-variable "path" {
+variable "dockerfile_location" {
   default = "/home/kali/Desktop/terraform_brainscale"
 }
