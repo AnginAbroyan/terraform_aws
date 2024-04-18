@@ -50,3 +50,14 @@ variable "asg_min_size" {
 variable "asg_desired_capacity" {
   default = "2"
 }
+
+
+#ECR
+
+variable "ecr_repos"{
+  description = "List of repo names"
+  default = ["ECR-brainscale"]
+}
+variable "path" {
+  default = "/home/kali/Desktop/terraform_brainscale"
+}

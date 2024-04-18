@@ -1,13 +1,12 @@
 resource "aws_launch_configuration" "launch_configuration" {
+  name = "launch_config"
   image_id             = var.instance_ami  # Ubuntu 22.04 LTS
   instance_type        = var.instance_type
   security_groups      = [aws_security_group.alb_sg.id]
   associate_public_ip_address = true
-
   lifecycle {
     create_before_destroy = true
   }
-  tags               = merge(var.tags, { Name = "${var.project_name}-ASG-launch" })
 }
 
 
@@ -21,5 +20,15 @@ resource "aws_autoscaling_group" "asg" {
   vpc_zone_identifier       = aws_subnet.private_subnets[*].id
   termination_policies      = ["OldestInstance"]
   wait_for_capacity_timeout = "10m"
-  tags               = merge(var.tags, { Name = "${var.project_name}-ASG" })
+  tag {
+    key                 = "Name"
+    value               = "${var.project_name}-ASG"
+    propagate_at_launch = true
+  }
+
+  tag {
+    key                 = "Project"
+    value               = "Terraform_Brainscale"
+    propagate_at_launch = true
+  }
 }
