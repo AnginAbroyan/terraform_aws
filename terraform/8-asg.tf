@@ -4,9 +4,16 @@ resource "aws_launch_configuration" "launch_configuration" {
   instance_type               = var.instance_type
   security_groups             = [aws_security_group.alb_sg.id]
   associate_public_ip_address = false
+  iam_instance_profile        = aws_iam_instance_profile.ec2_instance_profile.name
   lifecycle {
     create_before_destroy = true
   }
+  root_block_device {
+    volume_type = "gp2"
+    volume_size = 8
+    delete_on_termination = true
+  }
+  subnet_id = aws_subnet.private_subnets[var.private_subnet_index].id
 }
 
 

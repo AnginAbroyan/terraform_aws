@@ -61,3 +61,8 @@ variable "ecr_repos"{
 variable "dockerfile_location" {
   default = "/home/kali/Desktop/terraform_brainscale"
 }
+
+variable "private_subnet_index" {
+  description = "Index of the private subnet to use"
+  default     = 0  # Default to the first private subnet in the list
+}
