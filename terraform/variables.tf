@@ -56,7 +56,7 @@ variable "asg_desired_capacity" {
 
 variable "ecr_repos"{
   description = "List of repo names"
-  default = ["ECR-brainscale"]
+  default = ["ecr-brainscale"]
 }
 variable "path" {
   default = "/home/kali/Desktop/terraform_brainscale"
