@@ -67,20 +67,50 @@ resource "aws_iam_role" "ec2_role" {
 
 resource "aws_iam_policy" "ecr_policy" {
   name        = "${var.project_name}-ECR-Policy"
+  description = "IAM policy for accessing ECR"
   policy      = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
       {
         "Effect": "Allow",
         "Action": [
-          "ecr:GetAuthorizationToken",
           "ecr:BatchCheckLayerAvailability",
-          "ecr:GetDownloadUrlForLayer",
-          "ecr:GetRepositoryPolicy",
-          "ecr:DescribeRepositories",
-          "ecr:ListImages",
+          "ecr:BatchGetImage",
+          "ecr:BatchGetRepositoryScanningConfiguration",
+          "ecr:CompleteLayerUpload",
+          "ecr:CreatePullThroughCacheRule",
+          "ecr:CreateRepository",
+          "ecr:CreateRepositoryCreationTemplate",
+          "ecr:DeleteLifecyclePolicy",
+          "ecr:DeletePullThroughCacheRule",
+          "ecr:DeleteRepository",
+          "ecr:DeleteRepositoryCreationTemplate",
+          "ecr:DescribeImageReplicationStatus",
+          "ecr:DescribeImageScanFindings",
           "ecr:DescribeImages",
-          "ecr:BatchGetImage"
+          "ecr:DescribePullThroughCacheRules",
+          "ecr:DescribeRegistry",
+          "ecr:DescribeRepositories",
+          "ecr:DescribeRepositoryCreationTemplate",
+          "ecr:GetAuthorizationToken",
+          "ecr:GetDownloadUrlForLayer",
+          "ecr:GetLifecyclePolicy",
+          "ecr:GetLifecyclePolicyPreview",
+          "ecr:GetRegistryPolicy",
+          "ecr:GetRegistryScanningConfiguration",
+          "ecr:GetRepositoryPolicy",
+          "ecr:ListImages",
+          "ecr:ListTagsForResource",
+          "ecr:ReplicateImage",
+          "ecr:SetRepositoryPolicy",
+          "ecr:StartImageScan",
+          "ecr:StartLifecyclePolicyPreview",
+          "ecr:TagResource",
+          "ecr:UntagResource",
+          "ecr:UpdatePullThroughCacheRule",
+          "ecr:UploadLayerPart",
+          "cloudtrail:LookupEvents",
+          "iam:CreateServiceLinkedRole"
         ],
         "Resource": "*"
       }
@@ -92,6 +122,7 @@ resource "aws_iam_role_policy_attachment" "ecr_role_policy_attachment" {
   role       = aws_iam_role.ec2_role.name
   policy_arn = aws_iam_policy.ecr_policy.arn
 }
+
 
 resource "aws_iam_role_policy" "cloudtrail_role_policy" {
   name        = "${var.project_name}-CloudTrail-Policy"
