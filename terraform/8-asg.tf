@@ -53,7 +53,7 @@ resource "aws_autoscaling_group" "this" {
     version = aws_launch_template.this.latest_version
   }
   depends_on          = [aws_lb.alb]
-  vpc_zone_identifier = aws_subnet.private_subnets[*].id
+  vpc_zone_identifier = aws_subnet.public_subnets[*].id
 }
 
 
