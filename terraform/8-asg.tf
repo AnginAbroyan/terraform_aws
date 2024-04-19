@@ -30,6 +30,7 @@ resource "aws_launch_template" "this" {
   name = "${var.project_name}-tpl"
   image_id      = var.instance_ami
   instance_type = var.instance_type
+  vpc_security_group_ids = [aws_security_group.security_group_private.id]
   key_name = var.instance_keypair
   user_data = filebase64("${path.module}/user-data.sh")
 }
@@ -39,7 +40,6 @@ resource "aws_autoscaling_group" "this" {
   max_size = var.asg_max_size
   min_size = var.asg_min_size
   desired_capacity = var.asg_desired_capacity
-  vpc_security_group_ids = [aws_security_group.security_group_private.id]
   health_check_grace_period = 300
   health_check_type = "EC2"
   target_group_arns = [aws_lb_target_group.target_group.arn]
