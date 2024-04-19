@@ -42,13 +42,13 @@ variable "instance_ami" {
 
 #ASG
 variable "asg_max_size" {
-  default = "2"
+  default = "1"
 }
 variable "asg_min_size" {
-  default = "2"
+  default = "1"
 }
 variable "asg_desired_capacity" {
-  default = "2"
+  default = "1"
 }
 
 
