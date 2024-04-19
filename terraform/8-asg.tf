@@ -27,32 +27,33 @@
 #  }
 #}
 resource "aws_launch_template" "this" {
-  name = "${var.project_name}-tpl"
-  image_id      = var.instance_ami
-  instance_type = var.instance_type
+  name                   = "${var.project_name}-tpl"
+  image_id               = var.instance_ami
+  instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.security_group_private.id]
-  key_name = var.instance_keypair
-    iam_instance_profile {
-      name = aws_iam_instance_profile.ec2_instance_profile.name
-    }
+  key_name               = var.instance_keypair
+  iam_instance_profile {
+    name = aws_iam_instance_profile.ec2_instance_profile.name
+  }
   user_data = filebase64("${path.module}/user-data.sh")
+  depends_on = [aws_eip.nat_eip]
 }
 
 resource "aws_autoscaling_group" "this" {
-  name = "${var.project_name}-asg"
-  max_size = var.asg_max_size
-  min_size = var.asg_min_size
-  desired_capacity = var.asg_desired_capacity
+  name                      = "${var.project_name}-asg"
+  max_size                  = var.asg_max_size
+  min_size                  = var.asg_min_size
+  desired_capacity          = var.asg_desired_capacity
   health_check_grace_period = 300
-  health_check_type = "EC2"
-  target_group_arns = [aws_lb_target_group.target_group.arn]
-  termination_policies = ["OldestInstance"]
+  health_check_type         = "EC2"
+  target_group_arns         = [aws_lb_target_group.target_group.arn]
+  termination_policies      = ["OldestInstance"]
   launch_template {
-    id = aws_launch_template.this.id
+    id      = aws_launch_template.this.id
     version = aws_launch_template.this.latest_version
   }
-  depends_on = [aws_lb.alb]
-  vpc_zone_identifier  = aws_subnet.private_subnets[*].id
+  depends_on          = [aws_lb.alb]
+  vpc_zone_identifier = aws_subnet.private_subnets[*].id
 }
 
 
