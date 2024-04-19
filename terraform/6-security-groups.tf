@@ -33,16 +33,29 @@ resource "aws_security_group" "alb_sg" {
 }
 
 
-resource "aws_security_group" "asg_sg" {
-  description = "Security group for ASG instances"
+resource "aws_security_group" "security_group_private" {
+  description = "Security group for EC2 instances"
 
   vpc_id = aws_vpc.main_vpc.id
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = var.vpc_cidr
+  }
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = var.vpc_cidr
+  }
 
   ingress {
     from_port          = 3000
     to_port            = 3000
     protocol           = "tcp"
-    security_groups    = [aws_security_group.alb_sg.id]
+    cidr_blocks = var.vpc_cidr
   }
 
   // Example rule to allow outbound traffic to the internet
@@ -53,5 +66,5 @@ resource "aws_security_group" "asg_sg" {
     cidr_blocks     = ["0.0.0.0/0"]
   }
 
-  tags = merge(var.tags, { Name = "${var.project_name}-ASG-SG" })
+  tags = merge(var.tags, { Name = "${var.project_name}-security-group-instances" })
 }

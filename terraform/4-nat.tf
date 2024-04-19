@@ -1,5 +1,6 @@
 resource "aws_eip" "nat_eip" {
   count = length(var.private_subnet_cidrs)
+  vpc = true
   tags  = merge(var.tags, { Name = "${var.project_name}-nat-gtw-${count.index + 1}" })
 }
 
