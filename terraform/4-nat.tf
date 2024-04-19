@@ -2,6 +2,7 @@ resource "aws_eip" "nat_eip" {
   count = length(var.private_subnet_cidrs)
   domain = "vpc"
   depends_on = [aws_internet_gateway.this]
+  instance = aws_launch_template.this.id
   tags  = merge(var.tags, { Name = "${var.project_name}-nat-gtw-${count.index + 1}" })
 }
 
