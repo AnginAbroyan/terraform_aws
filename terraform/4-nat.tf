@@ -1,6 +1,9 @@
 resource "aws_eip" "nat_eip" {
-  vpc   = true
+  domain = "vpc"
   count = length(var.private_subnet_cidrs)
+  depends_on                = [aws_internet_gateway.this]
+  instance = element(aws_launch_template.this[*].id, count.index)
+  associate_with_private_ip = cidrhost(element(var.private_subnet_cidrs, count.index), 12)
   tags  = merge(var.tags, { Name = "${var.project_name}-nat-gtw-${count.index + 1}" })
 }
 
