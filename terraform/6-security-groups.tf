@@ -42,20 +42,20 @@ resource "aws_security_group" "security_group_private" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = var.vpc_cidr
+    cidr_blocks = [var.vpc_cidr]
   }
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = var.vpc_cidr
+    cidr_blocks = [var.vpc_cidr]
   }
 
   ingress {
     from_port          = 3000
     to_port            = 3000
     protocol           = "tcp"
-    cidr_blocks = var.vpc_cidr
+    cidr_blocks = [var.vpc_cidr]
   }
 
   // Example rule to allow outbound traffic to the internet
