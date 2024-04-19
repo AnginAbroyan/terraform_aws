@@ -5,6 +5,8 @@ sudo apt-get update -y
 sudo apt-get install docker.io -y
 sudo systemctl start docker
 
+sudo usermod -aG docker ubuntu
+
 sudo apt-get install -y awscli
 $(aws ecr get-login --no-include-email --region eu-central-1)
 
