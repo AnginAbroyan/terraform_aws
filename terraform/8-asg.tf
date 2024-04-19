@@ -36,7 +36,7 @@ resource "aws_launch_template" "this" {
     name = aws_iam_instance_profile.ec2_instance_profile.name
   }
   user_data = filebase64("${path.module}/user-data.sh")
-  depends_on = [aws_eip.nat_eip]
+#  depends_on = [aws_eip.nat_eip]
 }
 
 resource "aws_autoscaling_group" "this" {

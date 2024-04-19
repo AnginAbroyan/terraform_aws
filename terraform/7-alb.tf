@@ -1,5 +1,6 @@
 resource "aws_lb" "alb" {
   load_balancer_type = "application"
+  internal = false
   security_groups    = [aws_security_group.alb_sg.id]
   subnets            = aws_subnet.public_subnets[*].id
   tags               = merge(var.tags, { Name = "${var.project_name}-ALB" })
@@ -11,7 +12,7 @@ resource "aws_lb_target_group" "target_group" {
   port     = 3000
   protocol = "HTTP"
   target_type = "instance"
-  vpc_id     = aws_vpc.main_vpc.id
+  vpc_id     = aws_vpc.this.id
 
   health_check {
     path                = "/login"

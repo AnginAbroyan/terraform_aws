@@ -1,5 +1,5 @@
 resource "aws_security_group" "alb_sg" {
-  vpc_id = aws_vpc.main_vpc.id
+  vpc_id = aws_vpc.this.id
 
   ingress {
     from_port   = 80
@@ -36,7 +36,7 @@ resource "aws_security_group" "alb_sg" {
 resource "aws_security_group" "security_group_private" {
   description = "Security group for EC2 instances"
 
-  vpc_id = aws_vpc.main_vpc.id
+  vpc_id = aws_vpc.this.id
 
   ingress {
     from_port   = 80
