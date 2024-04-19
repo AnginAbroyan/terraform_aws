@@ -67,7 +67,6 @@ resource "aws_iam_role" "ec2_role" {
 
 resource "aws_iam_policy" "ecr_policy" {
   name        = "${var.project_name}-ECR-Policy"
-  description = "IAM policy for accessing ECR"
   policy      = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
@@ -97,7 +96,6 @@ resource "aws_iam_role_policy_attachment" "ecr_role_policy_attachment" {
 resource "aws_iam_role_policy" "cloudtrail_role_policy" {
   name        = "${var.project_name}-CloudTrail-Policy"
   role        = aws_iam_role.ec2_role.name
-  description = "IAM policy for CloudTrail"
   policy      = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
@@ -113,7 +111,6 @@ resource "aws_iam_role_policy" "cloudtrail_role_policy" {
 resource "aws_iam_role_policy" "iam_policy" {
   name        = "${var.project_name}-IAM-Policy"
   role        = aws_iam_role.ec2_role.name
-  description = "IAM policy for IAM"
   policy      = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
