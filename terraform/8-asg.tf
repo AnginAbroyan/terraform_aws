@@ -27,6 +27,7 @@
 #  }
 #}
 resource "aws_launch_template" "this" {
+  depends_on             = [aws_eip.nat_eip]
   name                   = "${var.project_name}-tpl"
   image_id               = var.instance_ami
   instance_type          = var.instance_type
@@ -36,7 +37,10 @@ resource "aws_launch_template" "this" {
     name = aws_iam_instance_profile.ec2_instance_profile.name
   }
   user_data = filebase64("${path.module}/user-data.sh")
-#  depends_on = [aws_eip.nat_eip]
+  network_interfaces {
+    associate_public_ip_address = true
+    delete_on_termination       = true
+  }
 }
 
 resource "aws_autoscaling_group" "this" {
