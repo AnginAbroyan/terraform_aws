@@ -75,5 +75,5 @@ variable "app_port" {
 }
 
 variable "my_ip" {
-  default = [91.103.248.27/32]
+  default = ["91.103.248.27/32"]
 }
