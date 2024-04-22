@@ -8,7 +8,7 @@ resource "aws_eip" "nat_eip" {
 }
 
 resource "aws_nat_gateway" "nat_gtw" {
-  #  count             = length(var.private_subnet_cidrs)
+  count         = length(var.private_subnet_cidrs)
   #  depends_on = [aws_eip.nat_eip]
   allocation_id = aws_eip.nat_eip[count.index].id
   subnet_id     = aws_subnet.public_subnets[count.index].id
