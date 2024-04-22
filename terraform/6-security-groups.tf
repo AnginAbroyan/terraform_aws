@@ -16,8 +16,8 @@ resource "aws_security_group" "alb_sg" {
   }
 
   ingress {
-    from_port   = 3000
-    to_port     = 3000
+    from_port   = var.app_port
+    to_port     = var.app_port
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -54,12 +54,12 @@ resource "aws_security_group" "security_group_private" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = var.my_ip
   }
 
   ingress {
-    from_port          = 3000
-    to_port            = 3000
+    from_port          = var.app_port
+    to_port            = var.app_port
     protocol           = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
