@@ -54,9 +54,9 @@ variable "asg_desired_capacity" {
 
 #ECR
 
-variable "ecr_repos"{
+variable "ecr_repos" {
   description = "List of repo names"
-  default = ["ecr-brainscale"]
+  default     = ["ecr-brainscale"]
 }
 variable "dockerfile_location" {
   default = "/home/kali/Desktop/terraform_brainscale"
@@ -66,4 +66,14 @@ variable "instance_keypair" {
   description = "AWS EC2 Key pair"
   type        = string
   default     = "brainscale"
+}
+
+
+#SG
+variable "app_port" {
+  default = 3000
+}
+
+variable "my_ip" {
+  default = ["91.103.248.27/32"]
 }

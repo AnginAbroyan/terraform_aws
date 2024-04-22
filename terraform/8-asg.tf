@@ -27,6 +27,7 @@
 #  }
 #}
 resource "aws_launch_template" "this" {
+  depends_on             = [aws_eip.nat_eip]
   name                   = "${var.project_name}-tpl"
   image_id               = var.instance_ami
   instance_type          = var.instance_type
@@ -36,7 +37,6 @@ resource "aws_launch_template" "this" {
     name = aws_iam_instance_profile.ec2_instance_profile.name
   }
   user_data = filebase64("${path.module}/user-data.sh")
-#  depends_on = [aws_eip.nat_eip]
 }
 
 resource "aws_autoscaling_group" "this" {
@@ -53,7 +53,7 @@ resource "aws_autoscaling_group" "this" {
     version = aws_launch_template.this.latest_version
   }
   depends_on          = [aws_lb.alb]
-  vpc_zone_identifier = aws_subnet.public_subnets[*].id
+  vpc_zone_identifier = aws_subnet.private_subnets[*].id
 }
 
 
@@ -85,7 +85,6 @@ resource "aws_autoscaling_group" "this" {
 #  }
 #}
 
-##TODO
 resource "aws_autoscaling_policy" "cpu_scaling_policy" {
   name                      = "cpu-scaling-policy"
   policy_type               = "TargetTrackingScaling"
