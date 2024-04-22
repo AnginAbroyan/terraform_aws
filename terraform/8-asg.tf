@@ -85,7 +85,6 @@ resource "aws_autoscaling_group" "this" {
 #  }
 #}
 
-##TODO
 resource "aws_autoscaling_policy" "cpu_scaling_policy" {
   name                      = "cpu-scaling-policy"
   policy_type               = "TargetTrackingScaling"
