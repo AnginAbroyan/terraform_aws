@@ -8,5 +8,5 @@ resource "aws_launch_template" "this" {
   iam_instance_profile {
     name = aws_iam_instance_profile.ec2_instance_profile.name
   }
-#  user_data = filebase64("${path.module}/user-data.sh")
+  user_data = filebase64("${path.module}/user-data.sh")
 }
