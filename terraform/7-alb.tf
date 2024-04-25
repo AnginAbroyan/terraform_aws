@@ -1,18 +1,19 @@
 resource "aws_lb" "alb" {
   load_balancer_type = "application"
-  internal = false
+  internal           = false
   security_groups    = [aws_security_group.alb_sg.id]
   subnets            = aws_subnet.public_subnets[*].id
+  idle_timeout       = 360
   tags               = merge(var.tags, { Name = "${var.project_name}-ALB" })
 }
 
 ##TODO
 resource "aws_lb_target_group" "target_group" {
-  name     = "target-group"
-  port     = 3000
-  protocol = "HTTP"
+  name        = "target-group"
+  port        = 3000
+  protocol    = "HTTP"
   target_type = "instance"
-  vpc_id     = aws_vpc.this.id
+  vpc_id      = aws_vpc.this.id
 
   health_check {
     path                = "/login"
