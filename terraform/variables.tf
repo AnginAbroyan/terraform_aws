@@ -58,9 +58,10 @@ variable "ecr_repos" {
   description = "List of repo names"
   default     = ["ecr-brainscale"]
 }
-variable "dockerfile_location" {
-  default = "/home/kali/Desktop/terraform_brainscale"
-}
+
+#variable "dockerfile_location" {
+#  default = "/home/kali/Desktop/terraform_brainscale"
+#}
 
 variable "instance_keypair" {
   description = "AWS EC2 Key pair"
