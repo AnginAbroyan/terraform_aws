@@ -33,10 +33,8 @@ module "launch_template" {
   instance_type = var.instance_type
   private_sg_id = module.security_groups.private_sg_id
   instance_keypair = var.instance_keypair
-  ecr_repos = var.ecr_repos
   project_name = var.project_name
   tags = var.tags
-  user_data_file = "${path.module}/user-data.sh"
 }
 
 module "auto_scaling_group" {
