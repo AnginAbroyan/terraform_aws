@@ -41,7 +41,6 @@ module "launch_template" {
 
 module "auto_scaling_group" {
   source = "../modules/asg"
-  vpc_id = module.vpc.vpc_id
   target_group_arn = module.load_balancer.target_group_arn
   private_subnet_id = module.vpc.private_subnet
   project_name = var.project_name
