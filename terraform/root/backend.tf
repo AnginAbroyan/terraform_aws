@@ -14,7 +14,7 @@ resource "aws_s3_bucket_versioning" "versioning_rs" {
 
 #Encryption aws:kms
 resource "aws_kms_key" "my_key" {
-  description             = "This key is used to encrypt bucket objects"
+  description             = "This key is used to encrypt bucket objects/some additional text to test the remote state"
   deletion_window_in_days = 10
 }
 
