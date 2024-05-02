@@ -55,7 +55,6 @@ module "auto_scaling_group" {
 module "ecr" {
   source     = "../modules/ecr"
   ecr_repos  = var.ecr_repos
-  project_name = var.project_name
 }
 
 
