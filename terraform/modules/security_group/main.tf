@@ -33,13 +33,6 @@ resource "aws_security_group" "private_sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  // Allow outbound traffic to the MySQL database on port 3306
-  egress {
-    from_port   = 3306
-    to_port     = 3306
-    protocol    = "tcp"
-    security_groups = [aws_security_group.db_sg.id]
-  }
   egress {
     from_port   = 0
     to_port     = 0
@@ -63,9 +56,9 @@ resource "aws_security_group" "db_sg" {
     security_groups = [aws_security_group.private_sg.id]
   }
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = -1
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
   tags = merge(var.tags, { Name = "${var.project_name}-security-group-db" })
