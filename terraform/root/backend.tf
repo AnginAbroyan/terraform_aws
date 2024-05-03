@@ -1,7 +1,7 @@
 #S3 Bucket
 resource "aws_s3_bucket" "terraform_remote_state" {
-  bucket = "terraform-rs-bucket-brainscale-simple-app-anabroyan"
-  tags   = merge(var.tags, { Name = "${var.project_name}-state-bucket1" })
+  bucket = "terraform-rs-bucket-brainscale-simple-app-anabroyan123456"
+  tags   = merge(var.tags, { Name = "${var.project_name}-state-bucket123456" })
 }
 
 #Versioning
@@ -31,12 +31,12 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "encrypt_config" {
 
 # Create DynamoDB table for state locks
 resource "aws_dynamodb_table" "terraform_state_locks" {
-  name         = "DynamoDB-table-state-locks1"
+  name         = "DynamoDB-table-state-locks123456"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "LockID"
   attribute {
     name = "LockID"
     type = "S"
   }
-  tags = merge(var.tags, { Name = "${var.project_name}-State-Locks" })
+  tags = merge(var.tags, { Name = "${var.project_name}-State-Locks123456" })
 }
