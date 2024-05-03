@@ -1,19 +1,21 @@
+#Create load balancer
 resource "aws_lb" "alb" {
   load_balancer_type = "application"
   internal           = false
-  security_groups    = [aws_security_group.alb_sg.id]
-  subnets            = aws_subnet.public_subnets[*].id
+  security_groups    = [var.alb_sg_id]
+  subnets            = var.public_subnet_id
+
   idle_timeout       = 360
   tags               = merge(var.tags, { Name = "${var.project_name}-ALB" })
 }
 
-##TODO
+#Create Target group for alb
 resource "aws_lb_target_group" "target_group" {
   name        = "target-group"
   port        = 3000
   protocol    = "HTTP"
   target_type = "instance"
-  vpc_id      = aws_vpc.this.id
+  vpc_id      = var.vpc_id
 
   health_check {
     path                = "/login"
@@ -26,7 +28,7 @@ resource "aws_lb_target_group" "target_group" {
   }
 }
 
-##TODO
+#Create listener to listen to 80 port
 resource "aws_lb_listener" "alb_listener" {
   load_balancer_arn = aws_lb.alb.arn
   port              = 80
