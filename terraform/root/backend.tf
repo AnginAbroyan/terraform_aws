@@ -1,6 +1,6 @@
 #S3 Bucket
 resource "aws_s3_bucket" "terraform_remote_state" {
-  bucket = "terraform-rs-bucket-brainscale-simple-app-anabr"
+  bucket = "terraform-rs-bucket-brainscale-simple-app-anabroyan"
   tags   = merge(var.tags, { Name = "${var.project_name}-state-bucket" })
 }
 
@@ -14,7 +14,7 @@ resource "aws_s3_bucket_versioning" "versioning_rs" {
 
 #Encryption aws:kms
 resource "aws_kms_key" "my_key" {
-  description             = "This key is used to encrypt bucket objects/some additional text to test the remote state"
+  description             = "This key is used to encrypt bucket objects"
   deletion_window_in_days = 10
 }
 
