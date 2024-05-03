@@ -1,7 +1,7 @@
 #S3 Bucket
 resource "aws_s3_bucket" "terraform_remote_state" {
   bucket = "terraform-rs-bucket-brainscale-simple-app-anabroyan"
-  tags   = merge(var.tags, { Name = "${var.project_name}-state-bucket" })
+  tags   = merge(var.tags, { Name = "${var.project_name}-state-bucket1" })
 }
 
 #Versioning
