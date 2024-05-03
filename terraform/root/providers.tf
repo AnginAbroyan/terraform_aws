@@ -15,7 +15,6 @@ terraform {
     bucket = "terraform-rs-bucket-brainscale-simple-app-anabroyan"
     dynamodb_table = "DynamoDB-table-state-locks1"
     key = "global/mystatefile1/terraform.tfstate"
-    profile = "terraform"
     region = "eu-central-1"
     encrypt = true
   }
