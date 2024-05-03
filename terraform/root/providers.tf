@@ -13,8 +13,8 @@ provider "docker" {
 terraform {
   backend "s3" {
     bucket = "terraform-rs-bucket-brainscale-simple-app-anabroyan"
-    dynamodb_table = "DynamoDB-table-state-locks"
-    key = "global/mystatefile/terraform.tfstate"
+    dynamodb_table = "DynamoDB-table-state-locks1"
+    key = "global/mystatefile1/terraform.tfstate"
     region = "eu-central-1"
     encrypt = true
   }
